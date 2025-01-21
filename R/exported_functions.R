@@ -64,7 +64,7 @@ format_results <- function(dosages = poly_dosages,ploidy = 4,Parent1,Parent2,nco
       #fill possibly not all missing
       if(length(NA_col) > 0){
         if(colSums(!is.na(temp[,NA_col,drop = FALSE])) > 0){
-         writeLines(paste0(mrk,' has ',round(length(NA_col)/(ncol(temp)-4)*100,2),'% missing'))
+          writeLines(paste0(mrk,' has ',round(length(NA_col)/(ncol(temp)-4)*100,2),'% missing'))
         }
       }
 
@@ -233,7 +233,7 @@ all_equations_generator <- function(P1_inheritance = 'Polysomic',
   #find the possible combinations of two parents in P1 and P2 separately
   mrk_P1 <- unlist(lapply(strsplit(all_pairs,'_'),function(each){each[1]}))
   P1_mrkcomb <- apply(expand.grid(mrk_P1,mrk_P1),2,as.character)
-    # rbind(t(combn(mrk_P1,2)),replicate(2,mrk_P1))
+  # rbind(t(combn(mrk_P1,2)),replicate(2,mrk_P1))
   mrk_P2 <- unlist(lapply(strsplit(all_pairs,'_'),function(each){each[2]}))
   # P2_mrkcomb <- rbind(t(combn(mrk_P2,2)),replicate(2,mrk_P2))
   P2_mrkcomb <- apply(expand.grid(mrk_P2,mrk_P2),2,as.character)
@@ -373,7 +373,7 @@ bivalent_equation_generator <- function(ploidy){
       res[[paste0(sort(each),collapse = '_')]] <- c(res[[paste0(sort(each),collapse = '_')]],possible_gametes)
       res_df <- rbind(res_df,df)
     }
-     res_df$pairing <- p
+    res_df$pairing <- p
     res_all <- rbind(res_all,res_df)
     pairing_gamete[[p]] <- res
   }
@@ -1146,7 +1146,7 @@ Haplotype_linkage <- function(Mrk_P = combs[c,][1],
 
                                                   if(P1_eq_chosen == 1 & P2_eq_chosen == 1){
                                                     phasing_P <- paste0(apply(P_parents,1,paste,collapse = ''),collapse = '_')
-                                                    phasing_Q <- res_chosen$chosen_phasing
+                                                    phasing_Q <- paste0(phasing_separate[1],'_',phasing_separate[2])
                                                   }
                                                   if(P1_eq_chosen == 1 & P2_eq_chosen == 2){
                                                     phasing_P <- paste0(paste0(P_parents[1,],collapse = ''),'_',phasing_separate[2])
@@ -1158,7 +1158,7 @@ Haplotype_linkage <- function(Mrk_P = combs[c,][1],
                                                   }
                                                   if(P1_eq_chosen == 2 & P2_eq_chosen == 1){
                                                     phasing_P <- paste0(phasing_separate[1],'_',paste0(P_parents[2,],collapse = ''))
-                                                    phasing_Q <- paste0(paste0(Q_parents[1,],collapse = ''),phasing_separate[2])
+                                                    phasing_Q <- paste0(paste0(Q_parents[1,],collapse = ''),'_',phasing_separate[2])
                                                   }
 
                                                   res_temp <- res_chosen
@@ -1180,25 +1180,25 @@ Haplotype_linkage <- function(Mrk_P = combs[c,][1],
                                                 }else{
                                                   ###Separating parents method
                                                   R_P1 <- recombination_estimate(equation = Q_P1_equation,
-                                                                                  tmp = offspring_probability_table,
-                                                                                  share_nbr = share_nbr,
-                                                                                  pairing = pairing,
-                                                                                  mrk_P = marker_P,
-                                                                                  mrk_Q = marker_Q,
+                                                                                 tmp = offspring_probability_table,
+                                                                                 share_nbr = share_nbr,
+                                                                                 pairing = pairing,
+                                                                                 mrk_P = marker_P,
+                                                                                 mrk_Q = marker_Q,
                                                                                  P_parents = P_parents,
                                                                                  Q_parents = Q_parents,
-                                                                                  parent = 'P1',
-                                                                                  eq_chosen = P1_eq_chosen)
+                                                                                 parent = 'P1',
+                                                                                 eq_chosen = P1_eq_chosen)
                                                   R_P2 <- recombination_estimate(equation = Q_P2_equation,
-                                                                                  tmp = offspring_probability_table,
-                                                                                  share_nbr = share_nbr,
-                                                                                  pairing = pairing,
-                                                                                  mrk_P = marker_P,
-                                                                                  mrk_Q = marker_Q,
+                                                                                 tmp = offspring_probability_table,
+                                                                                 share_nbr = share_nbr,
+                                                                                 pairing = pairing,
+                                                                                 mrk_P = marker_P,
+                                                                                 mrk_Q = marker_Q,
                                                                                  P_parents = P_parents,
                                                                                  Q_parents = Q_parents,
-                                                                                  parent = 'P2',
-                                                                                  eq_chosen = P2_eq_chosen)
+                                                                                 parent = 'P2',
+                                                                                 eq_chosen = P2_eq_chosen)
 
                                                   P1_chosen <- R_P1[R_P1$rf %in% min(R_P1$rf),]
                                                   P2_chosen <- R_P2[R_P2$rf %in% min(R_P2$rf),]
@@ -1442,7 +1442,7 @@ Haplotype_linkage_all <- function( offspring_score_list = offspring_score_list1,
 
                                                   if(P1_eq_chosen == 1 & P2_eq_chosen == 1){
                                                     phasing_P <- paste0(apply(P_parents,1,paste,collapse = ''),collapse = '_')
-                                                    phasing_Q <- res_chosen$chosen_phasing
+                                                    phasing_Q <- paste0(phasing_separate[1],'_',phasing_separate[2])
                                                   }
                                                   if(P1_eq_chosen == 1 & P2_eq_chosen == 2){
                                                     phasing_P <- paste0(paste0(P_parents[1,],collapse = ''),'_',phasing_separate[2])
@@ -1454,7 +1454,7 @@ Haplotype_linkage_all <- function( offspring_score_list = offspring_score_list1,
                                                   }
                                                   if(P1_eq_chosen == 2 & P2_eq_chosen == 1){
                                                     phasing_P <- paste0(phasing_separate[1],'_',paste0(P_parents[2,],collapse = ''))
-                                                    phasing_Q <- paste0(paste0(Q_parents[1,],collapse = ''),phasing_separate[2])
+                                                    phasing_Q <- paste0(paste0(Q_parents[1,],collapse = ''),'_',phasing_separate[2])
                                                   }
 
                                                   res_temp <- res_chosen
@@ -1473,15 +1473,15 @@ Haplotype_linkage_all <- function( offspring_score_list = offspring_score_list1,
                                                                                  parent = 'P1',
                                                                                  eq_chosen = P1_eq_chosen)
                                                   R_P2 <- recombination_estimate(equation = Q_P2_equation,
-                                                                                  tmp = offspring_probability_table,
-                                                                                  share_nbr = share_nbr,
-                                                                                  pairing = pairing,
-                                                                                  mrk_P = marker_P,
-                                                                                  mrk_Q = marker_Q,
+                                                                                 tmp = offspring_probability_table,
+                                                                                 share_nbr = share_nbr,
+                                                                                 pairing = pairing,
+                                                                                 mrk_P = marker_P,
+                                                                                 mrk_Q = marker_Q,
                                                                                  P_parents = P_parents,
                                                                                  Q_parents = Q_parents,
-                                                                                  parent = 'P2',
-                                                                                  eq_chosen = P2_eq_chosen)
+                                                                                 parent = 'P2',
+                                                                                 eq_chosen = P2_eq_chosen)
                                                   P1_chosen <- R_P1[R_P1$rf %in% min(R_P1$rf),]
                                                   P2_chosen <- R_P2[R_P2$rf %in% min(R_P2$rf),]
 
@@ -1511,7 +1511,7 @@ Haplotype_linkage_all <- function( offspring_score_list = offspring_score_list1,
                                                       }
                                                       if(P1_eq_chosen == 2 & P2_eq_chosen == 1){
                                                         phasing_P <- paste0(P1_e$phasing,'_',paste0(P_parents[2,],collapse = ''))
-                                                        phasing_Q <- paste0(paste0(Q_parents[1,],collapse = ''),P2_e$phasing)
+                                                        phasing_Q <- paste0(paste0(Q_parents[1,],collapse = ''),'_',P2_e$phasing)
                                                       }
                                                     }
                                                     data.frame(marker_P,marker_Q,r,LOD,phasing_P,phasing_Q)
@@ -1648,15 +1648,15 @@ Haplotype_linkage_all <- function( offspring_score_list = offspring_score_list1,
 #   return(recombintion_rf)
 # }
 recombination_estimate <- function(equation = Q_P2_equation,
-                                    tmp = offspring_probability_table,
-                                    share_nbr,
-                                    pairing,
-                                    mrk_P = marker_P,
-                                    mrk_Q = marker_Q,
-                                    P_parents = P_parents,
-                                    Q_parents = Q_parents,
-                                    parent = 'P2',
-                                    eq_chosen){
+                                   tmp = offspring_probability_table,
+                                   share_nbr,
+                                   pairing,
+                                   mrk_P = marker_P,
+                                   mrk_Q = marker_Q,
+                                   P_parents = P_parents,
+                                   Q_parents = Q_parents,
+                                   parent = 'P2',
+                                   eq_chosen){
   phasing_filter <- function(P_phasing =  P_parents,
                              Q_phasing = Q_parents,
                              tmp_count = tmp,
@@ -1893,8 +1893,8 @@ results_evaluation <- function(result = Linkage_res$output,
     #                   ploidy)
 
     sim_phase_gametes <- simulated_phasing_gametes(genfile = genfile,
-                                   mrk1 = strsplit(i,' x ')[[1]][1],
-                                   mrk2 = strsplit(i,' x ')[[1]][2])
+                                                   mrk1 = strsplit(i,' x ')[[1]][1],
+                                                   mrk2 = strsplit(i,' x ')[[1]][2])
     simulated_phasing_correct <- unlist(sapply(1:nrow(result$output[[i]]),function(j){
       esti_phase <- estimated_phasing(mrk1_phase = result$output[[i]][j,'phasing_P'],
                                       mrk2_phase = result$output[[i]][j,'phasing_Q'])
@@ -1987,7 +1987,7 @@ reconstruct_phasing <- function(temp = P1_all,
   z <-2
   while(!all(unlist(lapply(p_list,length)) == 1) & length(markers_pool) > 1
         & z != length(markers_pool)
-        ){
+  ){
     #loop start
     mrk <- significant_marker(marker_1 = marker_1,
                               marker_2 = marker_2,
@@ -2234,7 +2234,7 @@ Find_IBD <- function(offspring_probability = offspring_score_list$output,
       #make the results format
       phase_m <- phasing[m,]
       colnames(phase_m)[2:(2*ploidy + 1)] <- c(paste0('parent1_',seq(1,ploidy)),
-                                           paste0('parent2_',seq(1,ploidy)))
+                                               paste0('parent2_',seq(1,ploidy)))
       temp_ind <- cbind(temp_ind, phase_m)
       temp_ind
     }))
