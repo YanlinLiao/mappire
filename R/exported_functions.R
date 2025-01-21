@@ -1229,7 +1229,7 @@ Haplotype_linkage <- function(Mrk_P = combs[c,][1],
                                                       }
                                                       if(P1_eq_chosen == 2 & P2_eq_chosen == 1){
                                                         phasing_P <- paste0(P1_e$phasing,'_',paste0(P_parents[2,],collapse = ''))
-                                                        phasing_Q <- paste0(paste0(Q_parents[1,],collapse = ''),P2_e$phasing)
+                                                        phasing_Q <- paste0(paste0(Q_parents[1,],collapse = ''),'_',P2_e$phasing)
                                                       }
                                                     }
                                                     data.frame(marker_P,marker_Q,r,LOD,phasing_P,phasing_Q)
