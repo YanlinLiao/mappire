@@ -1967,6 +1967,10 @@ reconstruct_phasing <- function(temp = P1_all,
   # MT <- MT[markers,]
   ABCD <- MT1[(MT1[[paste0(parent,'_MT')]] %in%  '1_1_1_1') &(MT$sharing == 0),]$marker
   ABCD_markers <- names(sort(sort(table(unlist(c(temp[temp$LOD > 3,c(1,2)]))),decreasing = TRUE)[ABCD],decreasing = TRUE))
+  if(length(ABCD_markers) == 0){
+    ABCD <- MT1[(MT1[[paste0(parent,'_MT')]] %in%  '1_1_1_1'),]$marker
+    ABCD_markers <- names(sort(sort(table(unlist(c(temp[temp$LOD > 3,c(1,2)]))),decreasing = TRUE)[ABCD],decreasing = TRUE))
+  }
 
   #start marker
   start_marker <- ABCD_markers[1]
